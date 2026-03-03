@@ -1,0 +1,881 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eleutherio Imóveis | Estrela e Vale do Taquari</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Poppins',sans-serif;background:#f4f6f9;color:#1c1c1c;overflow-x:hidden;}
+
+/* HEADER */
+header{
+position:fixed;width:100%;padding:18px 6%;
+display:flex;justify-content:space-between;align-items:center;
+z-index:1000;transition:.4s;background:transparent;
+}
+header.scrolled{background:rgba(13,27,42,.95);backdrop-filter:blur(8px);}
+header h1{font-family:'Playfair Display',serif;color:#fff;font-size:22px;}
+header button{background:#00b4d8;color:#fff;border:none;padding:8px 14px;border-radius:8px;cursor:pointer;}
+header button:hover{transform:translateY(-2px);transition:.2s;}
+
+/* HERO PARALLAX */
+.hero{
+height:100vh;
+background:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c') center/cover fixed;
+display:flex;align-items:center;justify-content:center;
+text-align:center;color:#fff;position:relative;
+}
+.hero::before{content:"";position:absolute;width:100%;height:100%;background:rgba(0,0,0,.55);}
+.hero-content{position:relative;z-index:2;animation:fadeUp 1.2s ease forwards;}
+.hero h2{font-family:'Playfair Display',serif;font-size:52px;margin-bottom:20px;}
+.cta{background:#00b4d8;padding:14px 34px;border-radius:10px;color:#fff;text-decoration:none;display:inline-block;}
+.cta:hover{transform:translateY(-3px);transition:.2s;box-shadow:0 10px 25px rgba(0,0,0,.2);}
+
+/* SECTIONS */
+section{padding:110px 6%;opacity:0;transform:translateY(40px);transition:all .8s ease;}
+section.visible{opacity:1;transform:translateY(0);}
+.section-title{text-align:center;font-family:'Playfair Display',serif;font-size:36px;margin-bottom:60px;}
+
+/* CARROSSEL */
+.carousel{position:relative;overflow:hidden;}
+.carousel-track{display:flex;transition:transform .6s ease;}
+.carousel-item{min-width:100%;padding:0 20px;}
+.carousel img{width:100%;height:380px;object-fit:cover;border-radius:16px;}
+.carousel-buttons{position:absolute;width:100%;top:50%;display:flex;justify-content:space-between;transform:translateY(-50%);padding:0 14px;}
+.carousel-buttons button{background:#00b4d8;color:#fff;border:none;padding:10px 14px;border-radius:50%;cursor:pointer;}
+
+/* FILTER */
+.filters{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+gap:14px;
+margin-bottom:20px;
+}
+.filters input,.filters select,.filters button{
+padding:12px;border-radius:10px;border:1px solid #ddd;font-size:14px;background:#fff;
+}
+.filters button{
+background:#00b4d8;color:#fff;border:none;cursor:pointer;
+}
+.filters button:hover{transform:translateY(-2px);transition:.2s;}
+.filter-bar{
+display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;
+margin:12px 0 26px 0;
+}
+.pill{
+display:inline-flex;gap:8px;align-items:center;
+background:rgba(13,27,42,.06);
+padding:8px 12px;border-radius:999px;font-size:13px;
+}
+.pill b{color:#0d1b2a;}
+.clearBtn{background:transparent;border:1px solid #cfd8e3;color:#0d1b2a;}
+.clearBtn:hover{background:#fff;}
+
+/* CARDS */
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:30px;
+}
+.card{
+background:#fff;border-radius:16px;overflow:hidden;
+box-shadow:0 15px 40px rgba(0,0,0,.08);
+transition:.35s;cursor:pointer;
+}
+.card:hover{transform:translateY(-10px);box-shadow:0 25px 50px rgba(0,0,0,.15);}
+.card img{width:100%;height:230px;object-fit:cover;}
+.card-content{padding:22px;}
+.price{color:#00b4d8;font-weight:600;margin-top:10px;}
+.tagRow{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+.tag{font-size:12px;padding:5px 10px;border-radius:999px;background:rgba(0,180,216,.12);color:#007e98;font-weight:600;}
+.badge{position:absolute;left:16px;top:16px;background:#00b4d8;color:#fff;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:700;box-shadow:0 10px 20px rgba(0,0,0,.2);}
+
+/* PARALLAX SECTION */
+.parallax{
+background:url('https://images.unsplash.com/photo-1560518883-ce09059eeffa') center/cover fixed;
+color:#fff;text-align:center;padding:130px 20px;position:relative;
+}
+.parallax::before{content:"";position:absolute;inset:0;background:rgba(13,27,42,.55);}
+.parallax > *{position:relative;z-index:2;}
+.parallax h2{font-size:42px;font-family:'Playfair Display',serif;margin-bottom:12px;}
+.parallax p{max-width:880px;margin:0 auto;opacity:.95;line-height:1.7;}
+
+/* BALÕES */
+.baloes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:30px;}
+.balao{
+background:rgba(255,255,255,.82);backdrop-filter:blur(10px);
+padding:35px;border-radius:25px;box-shadow:0 10px 30px rgba(0,0,0,.08);
+transition:.3s;
+}
+.balao:hover{transform:translateY(-8px);}
+
+/* FOOTER */
+footer{background:#0d1b2a;color:#fff;text-align:center;padding:50px;}
+
+/* WHATS */
+.whatsapp{
+position:fixed;bottom:25px;right:25px;background:#25D366;color:#fff;
+padding:18px;border-radius:50%;text-decoration:none;box-shadow:0 15px 30px rgba(0,0,0,.3);
+transition:.3s;
+}
+.whatsapp:hover{transform:scale(1.1);}
+
+/* MODAL (DETALHE DO IMÓVEL) */
+#modal{
+display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);
+z-index:3000;align-items:center;justify-content:center;padding:22px;
+}
+.modalBox{
+background:#fff;border-radius:18px;max-width:980px;width:100%;
+max-height:90vh;overflow:auto;
+box-shadow:0 20px 60px rgba(0,0,0,.35);
+}
+.modalTop{position:relative;}
+.modalTop img{width:100%;height:420px;object-fit:cover;}
+.modalClose{
+position:absolute;right:16px;top:16px;
+background:rgba(255,255,255,.9);border:none;border-radius:999px;
+padding:10px 14px;cursor:pointer;font-weight:700;
+}
+.modalBody{padding:22px;}
+.modalBody h3{font-family:'Playfair Display',serif;font-size:30px;}
+.modalGrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:14px;}
+.modalInfo{background:#f6f8fb;border:1px solid #e7eef6;border-radius:14px;padding:14px;}
+.modalInfo b{color:#0d1b2a;}
+@media(max-width:820px){.modalGrid{grid-template-columns:1fr;} .hero h2{font-size:40px;}}
+
+/* LOGIN (ADMIN) */
+#loginModal{
+display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);
+z-index:5000;align-items:center;justify-content:center;padding:22px;
+}
+.loginBox{
+background:#fff;border-radius:18px;max-width:420px;width:100%;
+box-shadow:0 20px 60px rgba(0,0,0,.35);
+padding:26px;
+}
+.loginTop{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px;}
+.loginTop h2{font-family:'Playfair Display',serif;font-size:28px;}
+.loginClose{
+background:rgba(13,27,42,.06);border:1px solid #e7eef6;border-radius:999px;
+padding:8px 12px;cursor:pointer;font-weight:800;
+}
+.loginError{color:#e63946;font-size:14px;margin-top:6px;min-height:18px;}
+.loginHint{color:#556;font-size:13px;line-height:1.5;margin-top:10px;}
+
+/* ADMIN */
+#adminPanel{
+display:none;position:fixed;inset:0;background:#fff;overflow:auto;padding:34px;z-index:4000;
+}
+.adminHead{
+display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+margin-bottom:18px;
+}
+.adminHead h2{font-family:'Playfair Display',serif;}
+.adminCard{
+background:#f8f8f8;padding:18px;border-radius:14px;margin-bottom:12px;border:1px solid #e7eef6;
+}
+.adminRow{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;}
+input,textarea,select{width:100%;padding:10px;margin:6px 0;border-radius:10px;border:1px solid #ccc;}
+.primary{background:#00b4d8;color:#fff;border:none;padding:10px 16px;border-radius:10px;cursor:pointer;}
+.danger{background:#e63946;color:#fff;border:none;padding:8px 12px;border-radius:10px;cursor:pointer;}
+.ghost{background:transparent;border:1px solid #cfd8e3;color:#0d1b2a;padding:10px 16px;border-radius:10px;cursor:pointer;}
+.small{padding:7px 10px;border-radius:10px;font-size:13px;}
+hr.sep{border:none;border-top:1px solid #e7eef6;margin:16px 0;}
+.note{color:#556; font-size:13px; line-height:1.5;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(40px);}to{opacity:1;transform:translateY(0);}}
+</style>
+</head>
+
+<body>
+
+<header id="header">
+  <!-- LOGO: 3 cliques abre LOGIN/ADMIN -->
+  <h1 id="logoSite" style="cursor:pointer;user-select:none;">Eleutherio Imóveis</h1>
+  <div style="display:flex;gap:10px;align-items:center;">
+    <button class="ghost small" onclick="scrollToId('todos')">Todos</button>
+    <button class="ghost small" onclick="scrollToId('buscar')">Buscar</button>
+    <!-- Botão Admin removido -->
+  </div>
+</header>
+
+<section class="hero">
+<div class="hero-content">
+<h2>Seu imóvel ideal em Estrela e Vale do Taquari</h2>
+<p style="max-width:820px;margin:0 auto;opacity:.95;line-height:1.7;">
+Compra, venda e aluguel com segurança, transparência e atendimento personalizado.
+</p>
+<a href="https://wa.me/5551980569906" target="_blank" class="cta" style="margin-top:26px;">Falar com Especialista</a>
+</div>
+</section>
+
+<section id="destaques">
+<h3 class="section-title">Imóveis em Destaque</h3>
+
+<div class="carousel">
+<div class="carousel-track" id="carouselTrack"></div>
+<div class="carousel-buttons">
+<button onclick="prevSlide()" aria-label="Anterior">‹</button>
+<button onclick="nextSlide()" aria-label="Próximo">›</button>
+</div>
+</div>
+
+<p class="note" style="text-align:center;margin-top:14px;">
+</p>
+</section>
+
+<section class="parallax">
+<h2>Especialistas no mercado imobiliário do Vale do Taquari</h2>
+<p>
+Atendemos Estrela, Lajeado e cidades vizinhas com foco em agilidade, transparência e negociações seguras — do primeiro contato até a entrega das chaves.
+</p>
+</section>
+
+<section id="buscar">
+<h3 class="section-title">Buscar Imóveis</h3>
+
+<div class="filters">
+<select id="fCidade">
+<option value="">Cidade</option>
+<option value="Estrela">Estrela</option>
+<option value="Lajeado">Lajeado</option>
+<option value="Teutônia">Teutônia</option>
+<option value="Encantado">Encantado</option>
+<option value="Outro">Outro</option>
+</select>
+
+<select id="fFinalidade">
+<option value="">Finalidade</option>
+<option value="Venda">Venda</option>
+<option value="Aluguel">Aluguel</option>
+</select>
+
+<select id="fTipo">
+<option value="">Tipo</option>
+<option value="Casa">Casa</option>
+<option value="Apartamento">Apartamento</option>
+<option value="Terreno">Terreno</option>
+<option value="Sala Comercial">Sala Comercial</option>
+<option value="Sítio">Sítio</option>
+<option value="Cobertura">Cobertura</option>
+<option value="Outro">Outro</option>
+</select>
+
+<input type="number" id="fMin" placeholder="Preço mínimo (ex: 200000)">
+<input type="number" id="fMax" placeholder="Preço máximo (ex: 800000)">
+
+<select id="fOrdenar">
+<option value="">Ordenar</option>
+<option value="menor">Menor preço</option>
+<option value="maior">Maior preço</option>
+<option value="recentes">Mais recentes</option>
+</select>
+
+<button onclick="aplicarFiltro()">Buscar</button>
+</div>
+
+<div class="filter-bar">
+<div class="pill"><b id="countTxt">0</b> imóveis encontrados</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;">
+<button class="clearBtn ghost" onclick="limparFiltro()">Limpar filtros</button>
+<button class="primary" onclick="scrollToId('todos')">Ver todos</button>
+</div>
+</div>
+
+<div class="cards" id="cardsFiltrados"></div>
+</section>
+
+<section id="todos">
+<h3 class="section-title">Todos os Imóveis</h3>
+<div class="cards" id="cardsTodos"></div>
+</section>
+
+<section>
+<h3 class="section-title">Quem Somos</h3>
+<div class="baloes">
+<div class="balao">
+<h4>Propósito</h4>
+<p>Conectar pessoas ao imóvel ideal com segurança e transparência.</p>
+</div>
+<div class="balao">
+<h4>Missão</h4>
+<p>Oferecer negociações eficientes e atendimento personalizado no Vale do Taquari.</p>
+</div>
+<div class="balao">
+<h4>Visão</h4>
+<p>Ser referência regional pela credibilidade, agilidade e inovação.</p>
+</div>
+<div class="balao">
+<h4>Compromisso</h4>
+<p>Valorização patrimonial e suporte completo em todas as etapas.</p>
+</div>
+</div>
+</section>
+
+<footer>
+<p>Eleutherio Imóveis</p>
+<p>Estrela • Lajeado • Vale do Taquari</p>
+<p>WhatsApp: (51) 98056-9906</p>
+</footer>
+
+<a href="https://wa.me/5551980569906" target="_blank" class="whatsapp">W</a>
+
+<!-- MODAL -->
+<div id="modal">
+<div class="modalBox">
+<div class="modalTop">
+<img id="mImg" src="" alt="Imagem do imóvel">
+<button class="modalClose" onclick="fecharModal()">✕</button>
+</div>
+<div class="modalBody">
+<h3 id="mTitulo">Imóvel</h3>
+<p id="mDesc" style="margin-top:10px;line-height:1.7;color:#344;"></p>
+
+<div class="modalGrid">
+<div class="modalInfo"><b>Cidade:</b> <span id="mCidade"></span></div>
+<div class="modalInfo"><b>Bairro:</b> <span id="mBairro"></span></div>
+<div class="modalInfo"><b>Tipo:</b> <span id="mTipo"></span></div>
+<div class="modalInfo"><b>Finalidade:</b> <span id="mFinalidade"></span></div>
+<div class="modalInfo"><b>Preço:</b> <span id="mPreco"></span></div>
+<div class="modalInfo"><b>Destaque:</b> <span id="mDestaque"></span></div>
+</div>
+
+<a class="cta" style="margin-top:18px;" target="_blank" href="https://wa.me/5551980569906">
+Falar no WhatsApp
+</a>
+</div>
+</div>
+</div>
+
+<!-- LOGIN (3 cliques na logo abre) -->
+<div id="loginModal">
+  <div class="loginBox">
+    <div class="loginTop">
+      <h2>Acesso Restrito</h2>
+      <button class="loginClose" onclick="fecharLogin()">✕</button>
+    </div>
+
+    <label class="note">Email</label>
+    <input id="loginEmail" type="email" placeholder="eleutherioalan@gmail.com" autocomplete="username">
+
+    <label class="note">Senha</label>
+    <input id="loginSenha" type="password" placeholder="••••••••" autocomplete="current-password">
+
+    <div id="loginErro" class="loginError"></div>
+
+    <button class="primary" style="width:100%;margin-top:10px;" onclick="fazerLogin()">Entrar</button>
+
+    <div class="loginHint">
+          </div>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div id="adminPanel">
+<div class="adminHead">
+<h2>Painel Administrativo</h2>
+<div style="display:flex;gap:10px;flex-wrap:wrap;">
+<button class="ghost" onclick="seedDemo()">Adicionar exemplos</button>
+<button class="ghost" onclick="logout()">Logout</button>
+<button class="danger" onclick="fecharAdmin()">Fechar</button>
+</div>
+</div>
+
+<p class="note">
+Aqui você adiciona, edita e remove imóveis (modo local). Depois a gente integra com Supabase.
+</p>
+
+<hr class="sep">
+
+<h3 style="margin-bottom:10px;">Novo / Editar Imóvel</h3>
+<div class="adminRow">
+<div>
+<label class="note">Título</label>
+<input id="aTitulo" placeholder="Ex: Casa moderna com pátio">
+</div>
+<div>
+<label class="note">Cidade</label>
+<input id="aCidade" placeholder="Ex: Estrela">
+</div>
+<div>
+<label class="note">Bairro</label>
+<input id="aBairro" placeholder="Ex: Centro">
+</div>
+<div>
+<label class="note">Tipo</label>
+<select id="aTipo">
+<option>Casa</option><option>Apartamento</option><option>Terreno</option>
+<option>Sala Comercial</option><option>Sítio</option><option>Cobertura</option><option>Outro</option>
+</select>
+</div>
+<div>
+<label class="note">Finalidade</label>
+<select id="aFinalidade">
+<option>Venda</option><option>Aluguel</option>
+</select>
+</div>
+<div>
+<label class="note">Preço (somente números)</label>
+<input id="aPreco" type="number" placeholder="Ex: 650000">
+</div>
+<div style="grid-column:1/-1;">
+<label class="note">Descrição</label>
+<textarea id="aDesc" rows="3" placeholder="Descreva o imóvel (pontos fortes, localização, etc)"></textarea>
+</div>
+<div style="grid-column:1/-1;">
+<label class="note">Imagem (URL)</label>
+<input id="aImagem" placeholder="Cole a URL da imagem (Unsplash ou sua)">
+</div>
+<div style="display:flex;gap:10px;align-items:center;">
+<label style="display:flex;gap:10px;align-items:center;">
+<input type="checkbox" id="aDestaque"> <span class="note">Marcar como destaque</span>
+</label>
+</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;">
+<button class="primary" onclick="salvarImovel()">Salvar</button>
+<button class="ghost" onclick="limparForm()">Limpar</button>
+</div>
+</div>
+
+<hr class="sep">
+
+<h3 style="margin-bottom:10px;">Todos os Imóveis (Admin)</h3>
+<div id="adminLista"></div>
+</div>
+
+<script>
+/* =========================
+   LOGIN (LOCAL)
+   (obs: isso não é seguro em produção; é só pra uso simples)
+========================= */
+const ADMIN_EMAIL = "eleutherioalan@gmail.com";
+const ADMIN_SENHA = "abacaxi123";
+
+function isAdminLogado(){
+return localStorage.getItem("adminLogado") === "true";
+}
+function abrirLogin(){
+document.getElementById("loginErro").innerText = "";
+document.getElementById("loginModal").style.display = "flex";
+setTimeout(()=>document.getElementById("loginEmail").focus(), 50);
+}
+function fecharLogin(){
+document.getElementById("loginModal").style.display = "none";
+}
+function fazerLogin(){
+const email = (document.getElementById("loginEmail").value || "").trim();
+const senha = (document.getElementById("loginSenha").value || "").trim();
+
+if(email === ADMIN_EMAIL && senha === ADMIN_SENHA){
+localStorage.setItem("adminLogado", "true");
+fecharLogin();
+abrirAdmin(true);
+} else {
+document.getElementById("loginErro").innerText = "Email ou senha incorretos.";
+}
+}
+function logout(){
+localStorage.removeItem("adminLogado");
+document.getElementById("adminPanel").style.display = "none";
+}
+
+/* ========== UX/SCROLL ========== */
+window.addEventListener("scroll",()=>{
+document.getElementById("header").classList.toggle("scrolled",window.scrollY>50);
+});
+const sections=document.querySelectorAll("section");
+function reveal(){
+sections.forEach(sec=>{
+if(sec.getBoundingClientRect().top<window.innerHeight-100){sec.classList.add("visible");}
+});
+}
+window.addEventListener("scroll",reveal);
+reveal();
+function scrollToId(id){document.getElementById(id)?.scrollIntoView({behavior:"smooth"});}
+
+/* ========== 3 CLIQUES NA LOGO -> LOGIN/ADMIN ========== */
+let __logoClicks = 0;
+let __logoTimer = null;
+
+function __resetLogoClicks(){
+__logoClicks = 0;
+if(__logoTimer){ clearTimeout(__logoTimer); __logoTimer = null; }
+}
+
+document.addEventListener("DOMContentLoaded", ()=>{
+const logo = document.getElementById("logoSite");
+if(!logo) return;
+
+logo.addEventListener("click", ()=>{
+__logoClicks++;
+
+if(__logoClicks === 1){
+__logoTimer = setTimeout(__resetLogoClicks, 900); // tempo p/ completar os 3 cliques
+}
+
+if(__logoClicks >= 3){
+__resetLogoClicks();
+if(isAdminLogado()){
+abrirAdmin(true);
+} else {
+abrirLogin();
+}
+}
+});
+});
+
+/* Fechar login clicando fora + Enter para entrar */
+document.getElementById("loginModal").addEventListener("click",(e)=>{
+if(e.target.id==="loginModal") fecharLogin();
+});
+document.getElementById("loginSenha").addEventListener("keydown",(e)=>{
+if(e.key==="Enter") fazerLogin();
+});
+document.getElementById("loginEmail").addEventListener("keydown",(e)=>{
+if(e.key==="Enter") fazerLogin();
+});
+
+/* ========== DATA (LOCAL) ========== */
+let imoveis = [
+{
+id: 1,
+titulo:"Casa Moderna",
+cidade:"Estrela",
+bairro:"Centro",
+tipo:"Casa",
+finalidade:"Venda",
+preco:650000,
+descricao:"Casa moderna com ótima iluminação natural, pátio amplo e localização estratégica.",
+imagem:"https://images.unsplash.com/photo-1570129477492-45c003edd2be",
+destaque:true,
+createdAt: Date.now()-500000
+},
+{
+id: 2,
+titulo:"Apartamento Central",
+cidade:"Lajeado",
+bairro:"Centro",
+tipo:"Apartamento",
+finalidade:"Aluguel",
+preco:2500,
+descricao:"Apartamento no centro, com sacada e fácil acesso a tudo.",
+imagem:"https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+destaque:false,
+createdAt: Date.now()-300000
+},
+{
+id: 3,
+titulo:"Casa Alto Padrão",
+cidade:"Estrela",
+bairro:"Bairro São Cristóvão",
+tipo:"Casa",
+finalidade:"Venda",
+preco:1350000,
+descricao:"Alto padrão com área gourmet, piscina e acabamento premium.",
+imagem:"https://images.unsplash.com/photo-1600607687939-ce8a6c25118c",
+destaque:true,
+createdAt: Date.now()-100000
+}
+];
+
+let editId = null;
+
+/* ========== HELPERS ========== */
+const fmtBRL = (v)=>{
+try{
+if(v===null||v===undefined||v==="") return "";
+return new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(Number(v));
+}catch(e){return "R$ "+v;}
+};
+function nextId(){
+return imoveis.length ? Math.max(...imoveis.map(i=>i.id))+1 : 1;
+}
+
+/* ========== RENDER PUBLIC ========== */
+function cardHTML(i){
+return `
+<div class="card" onclick="abrirModal(${i.id})">
+<div style="position:relative">
+${i.destaque ? `<div class="badge">EM ALTA</div>` : ``}
+<img src="${i.imagem}" alt="${i.titulo}">
+</div>
+<div class="card-content">
+<h3>${i.titulo}</h3>
+<p style="margin-top:6px;color:#556">${i.tipo} • ${i.bairro} • ${i.cidade}</p>
+<div class="tagRow">
+<span class="tag">${i.finalidade}</span>
+<span class="tag">${i.tipo}</span>
+</div>
+<div class="price">${fmtBRL(i.preco)}</div>
+</div>
+</div>
+`;
+}
+
+function renderTodos(){
+document.getElementById("cardsTodos").innerHTML = imoveis
+.slice().sort((a,b)=>b.createdAt-a.createdAt)
+.map(cardHTML).join("");
+}
+
+function renderFiltrados(lista){
+document.getElementById("cardsFiltrados").innerHTML = lista.map(cardHTML).join("");
+document.getElementById("countTxt").innerText = String(lista.length);
+}
+
+/* ========== FILTER ========== */
+function aplicarFiltro(){
+let cidade = document.getElementById("fCidade").value.trim();
+let finalidade = document.getElementById("fFinalidade").value.trim();
+let tipo = document.getElementById("fTipo").value.trim();
+let min = document.getElementById("fMin").value ? Number(document.getElementById("fMin").value) : null;
+let max = document.getElementById("fMax").value ? Number(document.getElementById("fMax").value) : null;
+let ordenar = document.getElementById("fOrdenar").value;
+
+let lista = imoveis.slice();
+
+lista = lista.filter(i =>
+(!cidade || i.cidade===cidade || (cidade==="Outro" && !["Estrela","Lajeado","Teutônia","Encantado"].includes(i.cidade))) &&
+(!finalidade || i.finalidade===finalidade) &&
+(!tipo || i.tipo===tipo || (tipo==="Outro" && !["Casa","Apartamento","Terreno","Sala Comercial","Sítio","Cobertura"].includes(i.tipo))) &&
+(min===null || Number(i.preco)>=min) &&
+(max===null || Number(i.preco)<=max)
+);
+
+if(ordenar==="menor") lista.sort((a,b)=>Number(a.preco)-Number(b.preco));
+if(ordenar==="maior") lista.sort((a,b)=>Number(b.preco)-Number(a.preco));
+if(ordenar==="recentes") lista.sort((a,b)=>b.createdAt-a.createdAt);
+
+renderFiltrados(lista);
+}
+
+function limparFiltro(){
+document.getElementById("fCidade").value="";
+document.getElementById("fFinalidade").value="";
+document.getElementById("fTipo").value="";
+document.getElementById("fMin").value="";
+document.getElementById("fMax").value="";
+document.getElementById("fOrdenar").value="";
+renderFiltrados(imoveis.slice().sort((a,b)=>b.createdAt-a.createdAt));
+}
+
+/* ========== CAROUSEL (Destaques) ========== */
+let slideIndex = 0;
+let slideTimer = null;
+
+function renderCarousel(){
+const track = document.getElementById("carouselTrack");
+const destaques = imoveis.filter(i=>i.destaque);
+
+const list = (destaques.length ? destaques : imoveis.slice(0,3));
+track.innerHTML = list.map(i => `
+<div class="carousel-item" onclick="abrirModal(${i.id})" style="cursor:pointer;">
+<div style="position:relative;">
+<div class="badge" style="left:30px;top:20px;">DESTAQUE</div>
+<img src="${i.imagem}" alt="${i.titulo}">
+</div>
+<div style="padding:16px 26px;">
+<div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;">
+<div>
+<div style="font-weight:800;color:#0d1b2a;font-size:18px;">${i.titulo}</div>
+<div style="color:#556;margin-top:4px;">${i.tipo} • ${i.bairro} • ${i.cidade} • ${i.finalidade}</div>
+</div>
+<div style="color:#00b4d8;font-weight:800;font-size:18px;">${fmtBRL(i.preco)}</div>
+</div>
+</div>
+</div>
+`).join("");
+
+slideIndex = 0;
+updateSlide();
+
+if(slideTimer) clearInterval(slideTimer);
+slideTimer = setInterval(nextSlide, 5500);
+}
+
+function updateSlide(){
+const track = document.getElementById("carouselTrack");
+const items = track.children.length;
+if(items<=0) return;
+track.style.transform = `translateX(-${slideIndex*100}%)`;
+}
+function nextSlide(){
+const track = document.getElementById("carouselTrack");
+const items = track.children.length || 1;
+slideIndex = (slideIndex+1)%items;
+updateSlide();
+}
+function prevSlide(){
+const track = document.getElementById("carouselTrack");
+const items = track.children.length || 1;
+slideIndex = (slideIndex-1+items)%items;
+updateSlide();
+}
+
+/* ========== MODAL ========== */
+function abrirModal(id){
+const i = imoveis.find(x=>x.id===id);
+if(!i) return;
+
+document.getElementById("mImg").src = i.imagem;
+document.getElementById("mTitulo").innerText = i.titulo;
+document.getElementById("mDesc").innerText = i.descricao || "";
+document.getElementById("mCidade").innerText = i.cidade || "";
+document.getElementById("mBairro").innerText = i.bairro || "";
+document.getElementById("mTipo").innerText = i.tipo || "";
+document.getElementById("mFinalidade").innerText = i.finalidade || "";
+document.getElementById("mPreco").innerText = fmtBRL(i.preco);
+document.getElementById("mDestaque").innerText = i.destaque ? "Sim" : "Não";
+
+document.getElementById("modal").style.display="flex";
+}
+function fecharModal(){
+document.getElementById("modal").style.display="none";
+}
+
+/* ========== ADMIN (CRUD LOCAL) ========== */
+function abrirAdmin(force=false){
+if(!force && !isAdminLogado()){
+alert("Acesso negado. Dê 3 cliques na logo e faça login.");
+return;
+}
+document.getElementById("adminPanel").style.display="block";
+renderAdmin();
+}
+function fecharAdmin(){document.getElementById("adminPanel").style.display="none";}
+
+function limparForm(){
+editId = null;
+document.getElementById("aTitulo").value="";
+document.getElementById("aCidade").value="";
+document.getElementById("aBairro").value="";
+document.getElementById("aTipo").value="Casa";
+document.getElementById("aFinalidade").value="Venda";
+document.getElementById("aPreco").value="";
+document.getElementById("aDesc").value="";
+document.getElementById("aImagem").value="";
+document.getElementById("aDestaque").checked=false;
+}
+
+function salvarImovel(){
+if(!isAdminLogado()){ alert("Faça login para salvar."); return; }
+
+const titulo = document.getElementById("aTitulo").value.trim();
+const cidade = document.getElementById("aCidade").value.trim();
+const bairro = document.getElementById("aBairro").value.trim();
+const tipo = document.getElementById("aTipo").value;
+const finalidade = document.getElementById("aFinalidade").value;
+const preco = Number(document.getElementById("aPreco").value || 0);
+const descricao = document.getElementById("aDesc").value.trim();
+const imagem = document.getElementById("aImagem").value.trim();
+const destaque = document.getElementById("aDestaque").checked;
+
+if(!titulo || !cidade || !imagem || !preco){
+alert("Preenche pelo menos: Título, Cidade, Preço e Imagem (URL).");
+return;
+}
+
+if(editId){
+const idx = imoveis.findIndex(x=>x.id===editId);
+if(idx>=0){
+imoveis[idx] = {...imoveis[idx], titulo,cidade,bairro,tipo,finalidade,preco,descricao,imagem,destaque};
+}
+} else {
+imoveis.unshift({
+id: nextId(),
+titulo,cidade,bairro,tipo,finalidade,preco,descricao,imagem,destaque,
+createdAt: Date.now()
+});
+}
+
+limparForm();
+renderAll();
+}
+
+function editar(id){
+if(!isAdminLogado()){ alert("Faça login para editar."); return; }
+const i = imoveis.find(x=>x.id===id);
+if(!i) return;
+editId = id;
+document.getElementById("aTitulo").value=i.titulo||"";
+document.getElementById("aCidade").value=i.cidade||"";
+document.getElementById("aBairro").value=i.bairro||"";
+document.getElementById("aTipo").value=i.tipo||"Casa";
+document.getElementById("aFinalidade").value=i.finalidade||"Venda";
+document.getElementById("aPreco").value=i.preco||"";
+document.getElementById("aDesc").value=i.descricao||"";
+document.getElementById("aImagem").value=i.imagem||"";
+document.getElementById("aDestaque").checked=!!i.destaque;
+window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function remover(id){
+if(!isAdminLogado()){ alert("Faça login para excluir."); return; }
+if(!confirm("Excluir este imóvel?")) return;
+imoveis = imoveis.filter(x=>x.id!==id);
+renderAll();
+}
+
+function renderAdmin(){
+const box = document.getElementById("adminLista");
+box.innerHTML = imoveis.map(i=>`
+<div class="adminCard">
+<div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;">
+<div>
+<div style="font-weight:900;color:#0d1b2a;">${i.titulo}</div>
+<div class="note">${i.tipo} • ${i.bairro||"—"} • ${i.cidade} • ${i.finalidade} • <b>${fmtBRL(i.preco)}</b> ${i.destaque ? "• ⭐ Destaque" : ""}</div>
+</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;">
+<button class="ghost small" onclick="editar(${i.id})">Editar</button>
+<button class="danger small" onclick="remover(${i.id})">Excluir</button>
+</div>
+</div>
+</div>
+`).join("");
+}
+
+function seedDemo(){
+if(!isAdminLogado()){ alert("Faça login para adicionar exemplos."); return; }
+imoveis.unshift(
+{
+id: nextId(),
+titulo:"Terreno bem localizado",
+cidade:"Lajeado",
+bairro:"Universitário",
+tipo:"Terreno",
+finalidade:"Venda",
+preco:220000,
+descricao:"Terreno plano, ótima localização, ideal para construir.",
+imagem:"https://images.unsplash.com/photo-1501183638710-841dd1904471",
+destaque:false,
+createdAt: Date.now()
+}
+);
+renderAll();
+}
+
+/* ========== RENDER ALL ========== */
+function renderAll(){
+renderCarousel();
+renderTodos();
+renderFiltrados(imoveis.slice().sort((a,b)=>b.createdAt-a.createdAt));
+renderAdmin();
+}
+
+/* INIT */
+renderAll();
+
+/* Acessibilidade: fechar modal clicando fora */
+document.getElementById("modal").addEventListener("click",(e)=>{
+if(e.target.id==="modal") fecharModal();
+});
+</script>
+
+</body>
+</html>
